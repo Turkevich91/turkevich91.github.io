@@ -86,6 +86,8 @@ function newGame() {
     score0El.textContent = 0;
     score1El.textContent = 0;
     activePlayer = 0;
+    document.querySelector('.player--0').classList.add('player--active')
+    document.querySelector('.player--1').classList.remove('player--active')
     // whether or not winner class exist
     if (document.querySelector('.player--winner')) {
         document.querySelector('.player--winner').classList.remove('player--winner')
