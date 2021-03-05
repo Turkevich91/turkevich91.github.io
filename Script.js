@@ -28,14 +28,12 @@ const switchPlayer = function (hold = false) {
     const reinit = function () {
         console.log(`change player`)
         currentScore = 0;
-        document.querySelector(`#current--${activePlayer}`).textContent = 0
-        for (var i = 0; i < 1; i++) {
-            document.querySelector('.player--0').classList.toggle('player--active');
-            document.querySelector('.player--1').classList.toggle('player--active');
-        }
-        //FIXME: The problem with incorrect putting ".player--active"
-        // class to user node while toggling
-
+        document.getElementById(`current--0`).textContent = 0;
+        document.getElementById(`current--1`).textContent = 0;
+        console.log(`current user is: ${activePlayer + 1}`)
+        document.querySelector('.player--0').classList.toggle('player--active');
+        document.querySelector('.player--1').classList.toggle('player--active');
+        //FIXME: refactor
         activePlayer = activePlayer == 0 ? 1 : 0
     };
 
@@ -64,14 +62,15 @@ const rollDice = function () {
     let dice = Math.trunc(Math.random() * 6) + 1;
     // check if dice value == 1
     if (dice == 1) {
-        switchPlayer()
+        switchPlayer();
+    } else {
+        diceEl.classList.remove('hidden');
+        diceEl.src = `dice-${dice}.png`;
+        console.log(dice);
+        currentScore += dice;
+        console.log(currentScore)
+        document.querySelector(`#current--${activePlayer}`).textContent = currentScore;
     }
-    diceEl.classList.remove('hidden');
-    diceEl.src = `dice-${dice}.png`;
-    console.log(dice);
-    currentScore += dice;
-    console.log(currentScore)
-    document.querySelector(`#current--${activePlayer}`).textContent = currentScore;
 };
 
 //Events
@@ -88,11 +87,13 @@ function newGame() {
     activePlayer = 0;
     document.querySelector('.player--0').classList.add('player--active')
     document.querySelector('.player--1').classList.remove('player--active')
+    document.getElementById('current--0').textContent = 0;
+    document.getElementById('current--1').textContent = 0;
+    // document.querySelector()
     // whether or not winner class exist
-    if (document.querySelector('.player--winner')) {
+    if(document.querySelector('.player--winner')) {
         document.querySelector('.player--winner').classList.remove('player--winner')
     }
-
 }
 
 function addScore() {
