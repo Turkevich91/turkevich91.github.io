@@ -62,6 +62,9 @@ const rollDice = function () {
     let dice = Math.trunc(Math.random() * 6) + 1;
     // check if dice value == 1
     if (dice == 1) {
+        diceEl.classList.remove('hidden');
+        diceEl.src = `dice-${dice}.png`;
+        console.log(dice);
         switchPlayer();
     } else {
         diceEl.classList.remove('hidden');
